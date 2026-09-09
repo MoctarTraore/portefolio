@@ -1,0 +1,158 @@
+@import "@fontsource/sora/400.css";
+@import "@fontsource/sora/500.css";
+@import "@fontsource/sora/600.css";
+@import "@fontsource/sora/700.css";
+@import "@fontsource/sora/800.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   Design tokens — variables CSS pilotées par [data-theme].
+   Valeurs finales issues de design/Portfolio.dc.html (THEMES).
+   Défaut : sombre.
+   ============================================================ */
+:root,
+:root[data-theme="dark"] {
+  --p-bg: #0a0d16;
+  --p-bg2: #070a11;
+  --p-surf: #121826;
+  --p-surf2: #171e30;
+  --p-line: rgba(255, 255, 255, 0.09);
+  --p-fg: #f3f6fc;
+  --p-mut: #98a4be;
+  --p-acc: #2f86ff;
+  --p-acc-soft: rgba(47, 134, 255, 0.16);
+  --p-on-acc: #04101f;
+  --p-amber: #f5a524;
+  --p-ok: #22c55e;
+  --p-badge: #2f86ff;
+  --p-shadow: 0 18px 44px rgba(0, 0, 0, 0.45);
+  --p-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+  --p-bg: #f4f6fa;
+  --p-bg2: #edf1f8;
+  --p-surf: #ffffff;
+  --p-surf2: #f7f9fd;
+  --p-line: #e2e7f0;
+  --p-fg: #14182b;
+  --p-mut: #57627a;
+  --p-acc: #155cc4;
+  --p-acc-soft: rgba(21, 92, 196, 0.12);
+  --p-on-acc: #ffffff;
+  --p-amber: #92400e;
+  --p-ok: #0f8a43;
+  --p-badge: #155cc4;
+  --p-shadow: 0 14px 34px rgba(20, 24, 43, 0.1);
+  color-scheme: light;
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    background: var(--p-bg);
+    color: var(--p-fg);
+    font-family: "Sora", system-ui, -apple-system, "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    transition:
+      background 320ms var(--p-ease),
+      color 320ms var(--p-ease);
+    overflow-x: hidden;
+  }
+
+  a {
+    color: var(--p-acc);
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: var(--p-amber);
+  }
+
+  input,
+  textarea,
+  button {
+    font-family: inherit;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Ancre : header sticky de 90px */
+  section[id] {
+    scroll-margin-top: 90px;
+  }
+}
+
+@layer components {
+  /* Chip de stack technique (cartes projets) */
+  .stack-chip {
+    @apply whitespace-nowrap rounded-pill border border-line bg-surf2 px-[11px] py-[6px] text-[12px] font-semibold text-mut;
+  }
+
+  /* Chip légère (cartes compétences) */
+  .skill-chip {
+    @apply whitespace-nowrap rounded-pill bg-surf2 px-[10px] py-[5px] text-[12.5px] text-mut;
+  }
+
+  /* Pastille de disponibilité (section Contact) */
+  .avail-pill {
+    @apply inline-flex items-center gap-[9px] rounded-pill px-[14px] py-[7px] text-[12.5px] font-bold;
+  }
+
+  /* Champ de formulaire */
+  .field {
+    @apply rounded-2xl border border-line bg-bg px-4 text-[15px] text-fg outline-none;
+  }
+}
+
+/* ---- Boucles décoratives ---- */
+@keyframes floaty {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-9px);
+  }
+}
+
+@keyframes pulseDot {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.45;
+    transform: scale(0.75);
+  }
+}
+
+/* prefers-reduced-motion : les reveals et le parallax sont déjà neutralisés
+   côté JS (Framer Motion). On calme aussi les boucles décoratives. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
